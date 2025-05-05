@@ -1,6 +1,6 @@
 ###################################################
 # Erstelldatum: 28.01.2025#########################
-# letztes Änderungsdatum: 04.05.2025###############
+# letztes Änderungsdatum: 05.05.2025###############
 # Programmierer: Marek Kötter#####################
 ###################################################
 
@@ -24,6 +24,7 @@ if not f.verifyPassword():
 
 relay = Pin(48, Pin.OUT)
 relay.value(0)
+relay_on = False  # Zustand für MQTT-Steuerung
 
 i2c = SoftI2C(scl=Pin(41), sda=Pin(42))   # AHT10
 i2c0 = SoftI2C(scl=Pin(47), sda=Pin(21))  # BH1750
@@ -40,6 +41,7 @@ BROKER = "192.168.178.93"
 PORT = 1883
 CLIENT_ID = "Projekt Zutrittskontrolle"
 TOPIC = "Zutrittskontrolle"
+TOPIC_TUERSCHLOSS = "Schloss"
 
 wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
@@ -49,8 +51,25 @@ while not wlan.isconnected():
     time.sleep(1)
 print("WLAN verbunden:", wlan.ifconfig())
 
+# MQTT Callback-Funktion zur Relaissteuerung via externem Dashboard
+def sub_tuerschloss(topic, msg):
+    global relay_on
+    try:
+        daten = json.loads(msg)
+        schalter = daten.get('Schalter', '').upper()
+        if schalter == "ON":
+            relay_on = True
+        else:
+            relay_on = False
+        print("Empfang Türschloss:", schalter)
+    except Exception as e:
+        print("Fehler in sub_tuerschloss:", e)
+
+# MQTT Client konfigurieren und abonnieren
 client = MQTTClient(CLIENT_ID, BROKER, PORT)
+client.set_callback(sub_tuerschloss)
 client.connect()
+client.subscribe(TOPIC_TUERSCHLOSS)
 
 ################## Hauptloop ##################
 
@@ -60,6 +79,14 @@ intervall = 5  # Sekunden
 print("System bereit. Warte auf Finger...")
 
 while True:
+    client.check_msg()  # auf eingehende MQTT-Befehle prüfen
+
+    # Relais je nach externem Schaltbefehl setzen
+    if relay_on:
+        relay.value(1)
+    else:
+        relay.value(0)
+
     # --- Fingerprüfung ---
     if wak.value() == 0:
         print("Fingerkontakt erkannt – starte Scan...")
@@ -76,7 +103,7 @@ while True:
                     tft.text("Zutritt erlaubt", 105, 105, color565(255, 255, 255))
                     tft.text("ID: {}".format(positionNumber), 140, 125, color565(255, 255, 255))
 
-                    daten = {"Zutritt": "erlaubt","ID": positionNumber}
+                    daten = {"Zutritt": "erlaubt", "ID": positionNumber}
                     json_string = json.dumps(daten)
                     client.publish(TOPIC, json_string)
                     print("MQTT:", json_string)
@@ -89,8 +116,8 @@ while True:
                     print("Falscher Finger – Zugriff verweigert.")
                     tft.fill(color565(100, 0, 0))  # Rot
                     tft.text("Zutritt verweigert", 95, 110, color565(255, 255, 255))
-                    
-                    daten = {"Zutritt": "verweigert"}
+
+                    daten = {"Zutritt": "verweigert", "ID": -1}
                     json_string = json.dumps(daten)
                     client.publish(TOPIC, json_string)
                     print("MQTT:", json_string)
@@ -104,7 +131,7 @@ while True:
 
         time.sleep(2)
 
-    # --- Sensor-Messung alle 5 Sekunden ---egwe333g3g3
+    # --- Sensor-Messung alle 5 Sekunden ---
     if time.time() - last_measurement >= intervall:
         try:
             temp = round(aht10.temperature(), 0)
