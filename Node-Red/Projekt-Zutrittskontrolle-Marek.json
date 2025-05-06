@@ -1,0 +1,714 @@
+[
+    {
+        "id": "37244c9d7fce6766",
+        "type": "tab",
+        "label": "Projekt Zutrittskontrolle",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "779c9cf20ab04f69",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "5d4f08bd1e81d0d8",
+        "type": "mqtt in",
+        "z": "37244c9d7fce6766",
+        "name": "",
+        "topic": "Zutrittskontrolle",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "54ef2f060984f9a9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "2bea0888ce380e98",
+                "5aa80bc2fc5b3519",
+                "2b2b828e5a7091be",
+                "e8ee8189ae8b8c92",
+                "1232d517585fde1c"
+            ]
+        ]
+    },
+    {
+        "id": "5aa80bc2fc5b3519",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "Temperatur",
+        "func": "var temperatur = {payload: msg.payload.Temperatur};\nreturn temperatur;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "779c9cf20ab04f69",
+                "dfca70dceeed8cba"
+            ]
+        ]
+    },
+    {
+        "id": "dfca70dceeed8cba",
+        "type": "ui_gauge",
+        "z": "37244c9d7fce6766",
+        "name": "",
+        "group": "e1c6233d37f43947",
+        "order": 4,
+        "width": 6,
+        "height": 6,
+        "gtype": "wave",
+        "title": "Temperatur",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ff0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 630,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2bea0888ce380e98",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "Luftfeuchtigkeit",
+        "func": "var luftfeuchtigkeit = { payload: msg.payload.Luftfeuchtigkeit };\nreturn luftfeuchtigkeit;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "3d65ac8cad674b21",
+                "9c5739a8f5b6dbb1"
+            ]
+        ]
+    },
+    {
+        "id": "9c5739a8f5b6dbb1",
+        "type": "ui_gauge",
+        "z": "37244c9d7fce6766",
+        "name": "",
+        "group": "e1c6233d37f43947",
+        "order": 8,
+        "width": 6,
+        "height": 6,
+        "gtype": "wave",
+        "title": "Luftfeuchtigkeit",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#00ccff",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 640,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "3d65ac8cad674b21",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "2b2b828e5a7091be",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "Helligkeit",
+        "func": "msg.payload = msg.payload.Helligkeit\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "37f16706045eb92d",
+                "a5afcb46315285ca"
+            ]
+        ]
+    },
+    {
+        "id": "37f16706045eb92d",
+        "type": "ui_gauge",
+        "z": "37244c9d7fce6766",
+        "name": "",
+        "group": "e1c6233d37f43947",
+        "order": 6,
+        "width": 6,
+        "height": 6,
+        "gtype": "wave",
+        "title": "Helligkeit",
+        "label": "Lux",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "200",
+        "colors": [
+            "#ffffff",
+            "#ffffff",
+            "#ffffff"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 620,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a5afcb46315285ca",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e5a375198ff2ab6a",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "e8ee8189ae8b8c92",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "Umweltdaten",
+        "func": "let temperatur = msg.payload.Temperatur;\nlet luftfeuchtigkeit = msg.payload.Luftfeuchtigkeit;\nlet helligkeit = msg.payload.Helligkeit;\n\n//Timestamp in einem Format, das SQLite verarbeiten kann (YYYY-MM-DD HH:MM:SS)\nlet now = new Date();\nnow.setHours(now.getHours() + 2); // UTC+2 z. B. für Deutschland (Sommerzeit)\nlet timestamp = now.toISOString().replace(\"T\", \" \").substring(0, 19);\n\nmsg.topic = \"INSERT INTO umweltdaten (Zeit, Temperatur, Luftfeuchtigkeit, Helligkeit) VALUES (?, ?, ?, ?)\";\nmsg.payload = [timestamp, temperatur, luftfeuchtigkeit, helligkeit];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 620,
+        "wires": [
+            [
+                "74ee1fd9f488686b"
+            ]
+        ]
+    },
+    {
+        "id": "2704e618b5be9b83",
+        "type": "mysql",
+        "z": "37244c9d7fce6766",
+        "mydb": "8a1d1bc6ecea00d4",
+        "name": "Daten Zutritt",
+        "x": 810,
+        "y": 460,
+        "wires": [
+            [
+                "e5a375198ff2ab6a",
+                "ui_table1"
+            ]
+        ]
+    },
+    {
+        "id": "1232d517585fde1c",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "Zutrittsdaten",
+        "func": "let id = msg.payload.ID;\nlet zutritt = msg.payload.Zutritt;\n\n// Zeitformat wie bei umweltdaten: \"YYYY-MM-DD HH:MM:SS\"\nlet now = new Date();\nnow.setHours(now.getHours() + 2); // UTC+2 z. B. für Deutschland (Sommerzeit)\nlet timestamp = now.toISOString().replace(\"T\", \" \").substring(0, 19);\n\n// Schutz gegen NULL/undefined – verhindert SQL-Fehler\nif (id === null || id === undefined || !zutritt) {\n    node.warn(\"Ungültige Daten – Abbruch des Inserts.\");\n    return null; // bricht die Verarbeitung ab\n}\n\nmsg.topic = \"INSERT INTO zutrittsdaten (Zeit, `Finger ID`, Zutritt) VALUES (?, ?, ?)\";\nmsg.payload = [timestamp, id, zutritt];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 460,
+        "wires": [
+            [
+                "2704e618b5be9b83"
+            ]
+        ]
+    },
+    {
+        "id": "inject1",
+        "type": "inject",
+        "z": "37244c9d7fce6766",
+        "name": "Alle 5s abrufen",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "function1"
+            ]
+        ]
+    },
+    {
+        "id": "function1",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "SQL-Abfrage",
+        "func": "msg.topic = \"SELECT * FROM zutrittsdaten ORDER BY Zeit DESC LIMIT 100\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 500,
+        "wires": [
+            [
+                "2704e618b5be9b83"
+            ]
+        ]
+    },
+    {
+        "id": "ui_table1",
+        "type": "ui_table",
+        "z": "37244c9d7fce6766",
+        "group": "e1c6233d37f43947",
+        "name": "Zutrittsdaten-Tabelle",
+        "order": 2,
+        "width": 22,
+        "height": 4,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1080,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "08f2689b7fd33f3a",
+        "type": "mqtt out",
+        "z": "37244c9d7fce6766",
+        "name": "Tür öffnen",
+        "topic": "Schloss",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "54ef2f060984f9a9",
+        "x": 650,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "cbc0acd571f8f20d",
+        "type": "ui_switch",
+        "z": "37244c9d7fce6766",
+        "name": "Schalter 1",
+        "label": "Schalter 1",
+        "tooltip": "",
+        "group": "e1c6233d37f43947",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"Schalter\":\"ON\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"Schalter\":\"OFF\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 400,
+        "y": 800,
+        "wires": [
+            [
+                "08f2689b7fd33f3a",
+                "820c6e2a91997fb1"
+            ]
+        ]
+    },
+    {
+        "id": "820c6e2a91997fb1",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "b6d5c357c430399e",
+        "type": "function",
+        "z": "37244c9d7fce6766",
+        "name": "SQL-Abfrage",
+        "func": "msg.topic = \"SELECT * FROM umweltdaten ORDER BY Zeit DESC LIMIT 20\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 680,
+        "wires": [
+            [
+                "74ee1fd9f488686b"
+            ]
+        ]
+    },
+    {
+        "id": "61907bcd215e8c02",
+        "type": "ui_table",
+        "z": "37244c9d7fce6766",
+        "group": "e1c6233d37f43947",
+        "name": "Umweltdaten-Tabelle",
+        "order": 19,
+        "width": 22,
+        "height": 6,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1080,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "78da5f921ca53bb4",
+        "type": "inject",
+        "z": "37244c9d7fce6766",
+        "name": "Alle 5s abrufen",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 680,
+        "wires": [
+            [
+                "b6d5c357c430399e"
+            ]
+        ]
+    },
+    {
+        "id": "74ee1fd9f488686b",
+        "type": "mysql",
+        "z": "37244c9d7fce6766",
+        "mydb": "8a1d1bc6ecea00d4",
+        "name": "Daten Umwelt",
+        "x": 820,
+        "y": 620,
+        "wires": [
+            [
+                "61907bcd215e8c02",
+                "97124cfbb0e8589e"
+            ]
+        ]
+    },
+    {
+        "id": "97124cfbb0e8589e",
+        "type": "debug",
+        "z": "37244c9d7fce6766",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "211088affe45a389",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 1,
+        "width": 22,
+        "height": 1
+    },
+    {
+        "id": "eac6762fcbf7ae8b",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 5,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "5948e6ab6e6ab13a",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "825ad43afc2bc42e",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 9,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7feebbbf938fcd00",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 10,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "f6077632c2f12fae",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 11,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "0a71d4a6ceea829e",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 12,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "358ddb3ad896ccfe",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 13,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "d397f316b5b195cc",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 14,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "2e1280d5e767266e",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 15,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "3406c97cd92b8315",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 16,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7cfd075b36f1e392",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 17,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "4cb427885873edc9",
+        "type": "ui_spacer",
+        "z": "37244c9d7fce6766",
+        "name": "spacer",
+        "group": "e1c6233d37f43947",
+        "order": 18,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "54ef2f060984f9a9",
+        "type": "mqtt-broker",
+        "name": "Zutrittskontrolle",
+        "broker": "127.0.0.1",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e1c6233d37f43947",
+        "type": "ui_group",
+        "name": "Daten Zutrittskontrolle",
+        "tab": "a9d52433a278688f",
+        "order": 1,
+        "disp": true,
+        "width": 22,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8a1d1bc6ecea00d4",
+        "type": "MySQLdatabase",
+        "name": "Daten-Zutrittskontrolle",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "daten-zutrittskontrolle",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "a9d52433a278688f",
+        "type": "ui_tab",
+        "name": "Daten Zutrittskontrolle",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
