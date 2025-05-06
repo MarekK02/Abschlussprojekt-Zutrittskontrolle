@@ -1,3 +1,4 @@
+##Dieser Code wurde nicht von mir erstellt#
 from machine import UART, Pin
 from pyfingerprint import PyFingerprint
 import time
