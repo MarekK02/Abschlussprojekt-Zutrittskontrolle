@@ -23,7 +23,7 @@ if not f.verifyPassword():                     # Passwortüberprüfung des Senso
     raise Exception('Sensor-Passwort falsch!')
 
 relay = Pin(48, Pin.OUT)                       # Ausgang für Türöffner-Relais
-relay.value(0)                                 # Relai ist standardmäßig AUS
+relay.value(0)                                 # Relais ist standardmäßig AUS
 relay_on = False                               # Status-Variable für externes Schalten über MQTT
 
 # ----------- Sensoren über I2C ansprechen --------------------------------------------------------#
@@ -64,10 +64,10 @@ def sub_tuerschloss(topic, msg):
     try:                                          # Versucht den Block auszuführen
         daten = json.loads(msg)                    # Nachricht in JSON umwandeln
         schalter = daten.get('Schalter', '').upper()  # Holt sich den Wert
-        if schalter == "ON":                       # Wenn "ON", Relai aktivieren
+        if schalter == "ON":                       # Wenn "ON", Relais aktivieren
             relay_on = True
         else:
-            relay_on = False                       # Wenn "OFF" Reali deaktivieren
+            relay_on = False                       # Wenn "OFF" Realis deaktivieren
         print("Empfang Türschloss:", schalter)
     except Exception as e:                          # Fehlerüberprüfung
         print("Fehler in sub_tuerschloss:", e)
@@ -116,7 +116,7 @@ while True:
                     client.publish(TOPIC, json_string)  # MQTT Daten senden
                     print("MQTT:", json_string)
 
-                    time.sleep(5)  # Relai aktiv lassen für 5 sekunden
+                    time.sleep(5)  # Relais aktiv lassen für 5 sekunden
                     relay.value(0)
                     tft.fill(color565(0, 0, 50)) # Display zurücksetzen auf Hintergrundfarbe
                 else:
