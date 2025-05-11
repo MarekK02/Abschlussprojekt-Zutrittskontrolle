@@ -108,8 +108,8 @@ while True:
                     tft.fill(color565(0, 100, 0))  # Grün anzeigen
                     print("Finger erkannt – ID:", positionNumber)
                     relay.value(1)     # Relai zieht an
-                    tft.text("Zutritt erlaubt", 105, 105, color565(255, 255, 255))
-                    tft.text("ID: {}".format(positionNumber), 140, 125, color565(255, 255, 255))
+                    tft.text("Zutritt erlaubt", 45, 105, color565(255, 255, 255), scale=2)
+                    tft.text("ID: {}".format(positionNumber), 140, 125, color565(255, 255, 255), scale=2)
 
                     daten = {"Zutritt": "erlaubt", "ID": positionNumber}
                     json_string = json.dumps(daten)
@@ -122,7 +122,7 @@ while True:
                 else:
                     print("Falscher Finger – Zugriff verweigert.")
                     tft.fill(color565(100, 0, 0))  # Rot anzeigen
-                    tft.text("Zutritt verweigert", 95, 110, color565(255, 255, 255))
+                    tft.text("Zutritt verweigert", 30, 110, color565(255, 255, 255), scale=2)
 
                     daten = {"Zutritt": "verweigert", "ID": -1}
                     json_string = json.dumps(daten)
@@ -152,9 +152,9 @@ while True:
             print("MQTT:", json_string)
 
             tft.fill(color565(0, 0, 50))    # Hier werden die Daten Live im Display angezeigt
-            tft.text("Temp: {} C".format(temp), 105, 90, color565(255, 255, 0))
-            tft.text("Feuchte: {} %".format(luft), 105, 110, color565(0, 255, 255))
-            tft.text("Licht: {} Lux".format(licht), 105, 130, color565(255, 255, 255))
+            tft.text("Temp: {} C".format(temp), 65, 90, color565(255, 255, 0), scale=2)
+            tft.text("Feuchte: {} %".format(luft), 65, 110, color565(0, 255, 255), scale=2)
+            tft.text("Licht: {} Lux".format(licht), 65, 130, color565(255, 255, 255), scale=2)
 
             last_measurement = time.time() # Zeitpunkt der letzten Messung speichern
         except Exception as e:    # Automatische Fehlererkennung
