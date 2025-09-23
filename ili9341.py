@@ -1,4 +1,4 @@
-from time import sleep_ms
+from time import sleep_ms 
 import struct
 
 COLOR_MODE = 0x3A
@@ -94,17 +94,20 @@ class ILI9341:
             self.spi.write(color_bytes)
         self.cs(1)
 
-    def text(self, string, x, y, color):
+    def text(self, string, x, y, color, scale=1):
         for i, char in enumerate(string):
-            self.draw_char(x + i * 8, y, char, color)
+            self.draw_char(x + i * 8 * scale, y, char, color, scale)
 
-    def draw_char(self, x, y, char, color):
+    def draw_char(self, x, y, char, color, scale=1):
         pixels = FONT.get(char, FONT.get('?'))
         if pixels:
-            for col, line in enumerate(pixels):#
+            for col, line in enumerate(pixels):
                 for row in range(8):  # 8 Pixel hoch
                     if line & (1 << row):
-                        self.draw_pixel(x + col, y + row, color)
+                        for dx in range(scale):
+                            for dy in range(scale):
+                                self.draw_pixel(x + col * scale + dx, y + row * scale + dy, color)
+
 
 
     
@@ -183,5 +186,3 @@ FONT = {
     '°': [0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00],
     '?': [0x02, 0x51, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00]
 }
-
-
